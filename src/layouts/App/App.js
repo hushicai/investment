@@ -9,6 +9,7 @@ import Breadcrumb from '../../components/Breadcrumb';
 
 function App(props) {
   const {
+    title,
     main,
     location
   } = props;
@@ -17,7 +18,7 @@ function App(props) {
     <div className="app">
       <header>
         <hgroup>
-          <h1>价值回归测算</h1>
+          <h1>价值回归测算表</h1>
           <h2>
             <Breadcrumb pathname={location.pathname}></Breadcrumb>
           </h2>

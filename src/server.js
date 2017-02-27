@@ -11,9 +11,8 @@ import configureStore from './store/configureStore';
 const initialState = {
   valution: {
     anchor: 10,
-    duration: 5,
-    earning: 0.15,
-    growth: 0.25
+    earning: 0.26,
+    growth: 0.20
   }
 };
 const store = configureStore(initialState);
@@ -40,7 +39,7 @@ app.get('*', (req, res, next) => {
       const html = `<!doctype html>
         <html>
           <head>
-            <title>Hello World</title>
+            <title>投资</title>
             <link rel="stylesheet" href="/client.css" />
           </head>
           <body>

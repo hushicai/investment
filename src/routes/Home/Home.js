@@ -6,12 +6,14 @@
 import React from 'react';
 import {Link} from 'react-router';
 
+import ValutionContainer from '../../containers/Valution';
+
 function Home(props) {
   const {children}  = props;
 
   return (
     <div className="home">
-      <h3>Hello World!</h3>
+      <ValutionContainer />
     </div>
   );
 }
