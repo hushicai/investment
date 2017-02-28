@@ -1,3 +1,8 @@
+/**
+ * @file server
+ * @author hushicai(bluthcy@gmail.com)
+ */
+
 import path from 'path';
 import express from 'express';
 import React from 'react';
