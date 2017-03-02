@@ -3,18 +3,13 @@
  * @author hushicai(bluthcy@gmail.com)
  */
 
-import React, {PropTypes} from 'react';
+import React, {Component} from 'react';
 
 // 开发模式不使用同构
 // 方便使用css hot reload
 // https://medium.com/@justinjung04/react-server-side-rendering-and-hot-reloading-ffb87ca81a89#.vyztuioiy
 
-class Html extends React.Component {
-  static propTypes = {
-    state: PropTypes.Object,
-    children: PropTypes.string,
-  };
-
+class Html extends Component {
   render() {
     const {children, state} = this.props;
 

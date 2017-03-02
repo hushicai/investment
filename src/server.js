@@ -28,7 +28,24 @@ const port = process.env.PORT || 3000;
 
 const buildPath = path.resolve(__dirname, '../build/');
 
-app.use(serveStatic(buildPath));
+if (process.env.NODE_ENV === 'development') {
+  const webpack = require('webpack');
+  const [config] = require('../webpack.config');
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const compiler = webpack(config);
+
+  app.use(webpackDevMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+    stats: {
+      colors: true,
+      chunks: false
+    }
+  }));
+  app.use(webpackHotMiddleware(compiler));
+} else {
+  app.use(serveStatic(buildPath));
+}
 
 // Server-side rendering of the React app
 app.get('*', (req, res, next) => {
