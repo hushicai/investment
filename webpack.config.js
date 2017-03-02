@@ -83,7 +83,10 @@ var clientConfig = merge(config, {
 var serverConfig = merge(config, {
   // The configuration for the server-side rendering
   name: "server",
-  entry: "./src/server.js",
+  entry: [
+    'webpack/hot/poll?1000',
+    './src/server.js'
+  ],
   target: "node",
   output: {
     filename: "server.js",
