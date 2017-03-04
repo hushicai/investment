@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "webpack --watch --progress --colors --config ./webpack.config.js",
-    "wait-for-server": "just-wait --pattern \"build/server.js\" && nodemon ./build/server.js",
-    "dev": "concurrently \"npm run watch\" \"npm run wait-for-server\"",
-    "start": "cross-env NODE_ENV=development babel-node ./src/server.js"
+    "build": "cross-env NODE_ENV=production webpack --progress --colors --config ./webpack.config.js",
+    "serve": "node ./build/server.js",
+    "dev": "cross-env NODE_ENV=development babel-node ./src/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -47,6 +46,7 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.8.1",
     "redux-thunk": "^2.2.0",
-    "source-map-support": "^0.4.11"
+    "source-map-support": "^0.4.11",
+    "webpack-node-externals": "^1.5.4"
   }
 }
