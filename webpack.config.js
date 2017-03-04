@@ -4,6 +4,7 @@ var path = require("path");
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var isDebug = process.env.NODE_ENV !== 'production';
 var buildPath = path.resolve(__dirname, './build');
+var nodeExternals = require('webpack-node-externals');
 
 var config = {
   devtool: isDebug ? 'source-map': '',
@@ -54,7 +55,6 @@ var config = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('client.css'),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': isDebug ? '"development"' : '"production"'
@@ -68,23 +68,29 @@ var config = {
 };
 
 var clientConfig = merge(config, {
-  // The configuration for the client
   name: "browser",
   target: 'web',
-  entry: [
+  entry: isDebug ? [
     "webpack-hot-middleware/client",
     "./src/client.js"
-  ],
+  ] : ['./src/client.js'],
   output: {
     filename: "client.js",
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin('client.css'),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ]
 });
 
 var serverConfig = merge(config, {
-  // The configuration for the server-side rendering
   name: "server",
   entry: [
-    'webpack/hot/poll?1000',
+    // 'webpack/hot/poll?1000',
     './src/server.js'
   ],
   target: "node",
@@ -92,11 +98,20 @@ var serverConfig = merge(config, {
     filename: "server.js",
     libraryTarget: "commonjs2"
   },
-  externals: /^[a-z\-0-9]+$/,
+  externals: [nodeExternals()],
   node: {
     __dirname: true,
     __filename: true
-  }
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      mangle: false,
+      beautify: true
+    })
+  ]
 });
 
 module.exports = [clientConfig, serverConfig];
